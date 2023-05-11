@@ -5,6 +5,8 @@
 # YOLOv8
 ### The Pytorch implementation is [ultralytics/ultralytics](https://github.com/ultralytics/ultralytics)
 
+<font face="微软雅黑" size=15><b>支持三种不同精度的量化</b></font>
+
 # Requirements
 ### TensorRT 8.2
 ### OpenCV 3.6.0
