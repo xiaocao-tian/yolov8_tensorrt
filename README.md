@@ -23,6 +23,12 @@ python gen_wts.py
 ` `` 
 #### 2. Run CMakeLists.txt with Cmake
 
+```
+function test() {
+  console.log("notice the blank line before this function?");
+}
+```
+
 ### 3. Open project and run it
 
 # INT8 Quantization
