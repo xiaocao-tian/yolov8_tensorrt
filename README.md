@@ -24,12 +24,11 @@ python gen_wts.py
 ```
 2. Run CMakeLists.txt with Cmake
 
-<font size=1>显示内容</font>
-
 3. Open project and run it
 
 # INT8 Quantization
 1. set the macro USE_INT8 in config.h and make
 
 2. serialize the model and test
+3. 
 ![bus](https://github.com/tianqiang1223/yolov8_tensorrt/blob/main/images/bus.jpg)
