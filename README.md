@@ -7,7 +7,7 @@ The Pytorch implementation is [ultralytics/ultralytics](https://github.com/ultra
 
 
 # Requirements
-TensorRT 8.2
+TensorRT 8.2\
 OpenCV 3.6.0
 
 # Config
