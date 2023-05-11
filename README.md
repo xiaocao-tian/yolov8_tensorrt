@@ -24,9 +24,10 @@ python gen_wts.py
 #### 2. Run CMakeLists.txt with Cmake
 
 ```
-function test() {
-  console.log("notice the blank line before this function?");
-}
+// download https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8s.pt
+cd yolov8
+python gen_wts.py
+// a file 'yolov8s.wts' will be generated.
 ```
 
 ### 3. Open project and run it
