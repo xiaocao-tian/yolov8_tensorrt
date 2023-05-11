@@ -11,7 +11,7 @@ TensorRT 8.2\
 OpenCV 3.6.0
 
 # Config
-Choose the model n/s/m/l/x from command line arguments.
+Choose the model n/s/m/l/x from command line arguments.\
 Check more configs in include/config.h
 
 # How to Run, yolov8s as example
