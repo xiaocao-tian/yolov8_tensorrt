@@ -32,5 +32,4 @@ python gen_wts.py
 1. set the macro USE_INT8 in config.h and make
 
 2. serialize the model and test
-![bus](https://github.com/tianqiang1223/yolov8_tensorrt/assets/65889782/8dad8a2f-f414-498a-a5e3-c52cbbc31ff7)
 ![bus](https://github.com/tianqiang1223/yolov8_tensorrt/blob/main/images/bus.jpg)
