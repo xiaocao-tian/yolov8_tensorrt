@@ -23,7 +23,7 @@ python gen_wts.py
 ```
 #### 2. Run CMakeLists.txt with Cmake
 
-<font size=62>显示内容</font>
+<font size=1>显示内容</font>
 
 ### 3. Open project and run it
 
