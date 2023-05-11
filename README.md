@@ -15,12 +15,12 @@
 
 # How to Run, yolov8s as example
 ### 1. generate .wts from pytorch with .pt
-·''python
+` `` python
 // download https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8s.pt
 cd yolov8
 python gen_wts.py
 // a file 'yolov8s.wts' will be generated.
-·''
+` `` 
 #### 2. Run CMakeLists.txt with Cmake
 
 ### 3. Open project and run it
