@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(yolov8)
 
-set(OpenCV_DIR "D:\\software\\opencv\\build")  
-set(TRT_DIR "D:\\software\\TensorRT-8.5.2.2")  
+set(OpenCV_DIR "D:/software/opencv/build")  
+set(TRT_DIR "D:/software/TensorRT-8.5.2.2")  
 
 add_definitions(-std=c++11)
 add_definitions(-DAPI_EXPORTS)
@@ -15,7 +15,6 @@ find_package(CUDA REQUIRED)
 message(STATUS "libraries: ${CUDA_LIBRARIES}")
 message(STATUS "include path: ${CUDA_INCLUDE_DIRS}")
 include_directories(${CUDA_INCLUDE_DIRS})
-include_directories(${Dirent_INCLUDE_DIRS}) 
 
 enable_language(CUDA)
 
