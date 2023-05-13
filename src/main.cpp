@@ -123,11 +123,11 @@ int main() {
 ******************************************  dllexport  **********************************************
 *****************************************************************************************************/
 
-//extern "C" __declspec(dllexport) void startInference(int switch_flag) {
+//extern "C" __declspec(dllexport) void startInference() {
 //    std::string engine_name = "./weights/yolov8s.engine";
 //    std::string class_file = "./weights/classes80.txt";
 //
-//    Inference(engine_name, class_file, switch_flag);
+//    Inference(engine_name, class_file);
 //
 //    return;
 //}
