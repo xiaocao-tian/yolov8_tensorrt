@@ -4,8 +4,8 @@ import os
 import struct
 import torch
 
-pt_file = "./weights/yolov8l.pt"
-wts_file = "./weights/yolov8l.wts"
+pt_file = "./weights/yolov8s.pt"
+wts_file = "./weights/yolov8s.wts"
 
 # Initialize
 device = 'cpu'
