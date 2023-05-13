@@ -12,8 +12,8 @@ set(CMAKE_BUILD_TYPE Debug)
 
 # setup CUDA
 find_package(CUDA REQUIRED)
-message(STATUS "    libraries: ${CUDA_LIBRARIES}")
-message(STATUS "    include path: ${CUDA_INCLUDE_DIRS}")
+message(STATUS "libraries: ${CUDA_LIBRARIES}")
+message(STATUS "include path: ${CUDA_INCLUDE_DIRS}")
 include_directories(${CUDA_INCLUDE_DIRS})
 include_directories(${Dirent_INCLUDE_DIRS}) 
 
@@ -21,11 +21,6 @@ enable_language(CUDA)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/plugin)
-
-message("embed_platform off")
-# cuda
-include_directories(C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.2/include)
-link_directories(C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.2/lib/x64)
 
 # tensorrt
 include_directories(D:/software/TensorRT-8.5.2.2/include)
