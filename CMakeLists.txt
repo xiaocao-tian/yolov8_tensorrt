@@ -22,15 +22,17 @@ enable_language(CUDA)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/plugin)
 
-# tensorrt
-include_directories(D:/software/TensorRT-8.5.2.2/include)
-link_directories(D:/software/TensorRT-8.5.2.2/lib)
+# TensorRT
+find_package(TRT_DIR)
+include_directories(${TRT_DIR}/include)
+link_directories(${TRT_DIR}/lib)
+
+# OpenCV
+find_package(OpenCV)
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_library(myplugins SHARED ${PROJECT_SOURCE_DIR}/plugin/yololayer.cu)
 target_link_libraries(myplugins nvinfer cudart)
-
-find_package(OpenCV)
-include_directories(${OpenCV_INCLUDE_DIRS})
 
 file(GLOB_RECURSE SRCS ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/*.cu)
 add_executable(yolov8 ${PROJECT_SOURCE_DIR}/src/main.cpp ${SRCS})
