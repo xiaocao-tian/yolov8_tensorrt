@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(yolov8)
 
+# Modify to your path
 set(OpenCV_DIR "D:/software/opencv/build")  
 set(TRT_DIR "D:/software/TensorRT-8.5.2.2")  
 
