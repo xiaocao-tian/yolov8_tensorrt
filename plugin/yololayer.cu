@@ -43,6 +43,7 @@ namespace nvinfer1
 
 
     void YoloLayerPlugin::serialize(void* buffer) const noexcept {
+        
         using namespace Tn;
         char* d = static_cast<char*>(buffer), * a = d;
         write(d, mClassCount);
@@ -81,10 +82,12 @@ namespace nvinfer1
 
 
     bool YoloLayerPlugin::isOutputBroadcastAcrossBatch(int outputIndex, const bool* inputIsBroadcasted, int nbInputs) const noexcept {
+
         return false;
     }
 
     bool YoloLayerPlugin::canBroadcastInputAcrossBatch(int inputIndex) const noexcept {
+
         return false;
     }
 
@@ -96,6 +99,7 @@ namespace nvinfer1
     void YoloLayerPlugin::detachFromContext() noexcept {}
 
     const char* YoloLayerPlugin::getPluginType() const noexcept {
+        
         return "YoloLayer_TRT";
     }
 
@@ -104,23 +108,33 @@ namespace nvinfer1
     }
 
     void YoloLayerPlugin::destroy() noexcept {
+
         delete this;
     }
 
     nvinfer1::IPluginV2IOExt* YoloLayerPlugin::clone() const noexcept {
-        YoloLayerPlugin* p = new YoloLayerPlugin(mClassCount, mYoloV8netHeight, mYoloV8NetWidth, mMaxOutObject);
+        
+        YoloLayerPlugin* p = new YoloLayerPlugin(mClassCount, mYoloV8NetWidth, mYoloV8netHeight, mMaxOutObject);
         p->setPluginNamespace(mPluginNamespace);
         return p;
     }
 
+
+    int YoloLayerPlugin::enqueue(int batchSize, const void* const* inputs, void* const* outputs, void* workspace, cudaStream_t stream) noexcept {
+
+        forwardGpu((const float* const*)inputs, (float*)outputs[0], stream, mYoloV8netHeight, mYoloV8NetWidth, batchSize);
+        return 0;
+    }
+
+
     __device__ float Logist(float data) { return 1.0f / (1.0f + expf(-data)); };
 
 
-    __global__ void CalDetection(const float* input, float* output, int numElements, int maxoutobject, const int grid, const int stride, int classes) {
+    __global__ void CalDetection(const float* input, float* output, int numElements, int maxoutobject, const int grid_h, int grid_w, const int stride, int classes) {
         int idx = threadIdx.x + blockDim.x * blockIdx.x;
         if (idx >= numElements) return;
 
-        int total_grid = grid * grid;
+        int total_grid = grid_h * grid_w;
         int info_len = 4 + classes;
         const float* curInput = input;
 
@@ -141,8 +155,8 @@ namespace nvinfer1
         char* data = (char*)output + sizeof(float) + count * sizeof(Detection);
         Detection* det = (Detection*)(data);
 
-        int row = idx / grid;
-        int col = idx % grid;
+        int row = idx / grid_w;
+        int col = idx % grid_w;
 
         det->conf = max_cls_prob;
         det->class_id = class_id;
@@ -153,30 +167,26 @@ namespace nvinfer1
     }
 
 
-    void YoloLayerPlugin::forwardGpu(const float* const* inputs, float* output, cudaStream_t stream, int batchSize) {
+
+    void YoloLayerPlugin::forwardGpu(const float* const* inputs, float* output, cudaStream_t stream, int mYoloV8netHeight,int mYoloV8NetWidth, int batchSize) {
         int outputElem = 1 + mMaxOutObject * sizeof(Detection) / sizeof(float);
         cudaMemsetAsync(output, 0, sizeof(float), stream);
 
         int numElem = 0;
-        int grids[] = { 80, 40, 20 };
+        int grids[3][2] = { {mYoloV8netHeight / 8, mYoloV8NetWidth / 8}, {mYoloV8netHeight / 16, mYoloV8NetWidth / 16}, {mYoloV8netHeight / 32, mYoloV8NetWidth / 32} };
         int strides[] = { 8, 16, 32 };
         for (unsigned int i = 0; i < 3; i++) {
-            int grid = grids[i];
+            int grid_h = grids[i][0];
+            int grid_w = grids[i][1];
             int stride = strides[i];
-            numElem = grid * grid;
+            numElem = grid_h * grid_w;
             if (numElem < mThreadCount) mThreadCount = numElem;
 
             CalDetection << <(numElem + mThreadCount - 1) / mThreadCount, mThreadCount, 0, stream >> >
-                (inputs[i], output, numElem, mMaxOutObject, grid, stride, mClassCount);
+                (inputs[i], output, numElem, mMaxOutObject, grid_h, grid_w, stride, mClassCount);
         }
     }
-
-    int YoloLayerPlugin::enqueue(int batchSize, const void* const* inputs, void* const* outputs, void* workspace, cudaStream_t stream) noexcept {
-        forwardGpu((const float* const*)inputs, (float*)outputs[0], stream, batchSize);
-        return 0;
-    }
-
-
+  
     PluginFieldCollection YoloPluginCreator::mFC{};
     std::vector<PluginField> YoloPluginCreator::mPluginAttributes;
 
@@ -207,6 +217,7 @@ namespace nvinfer1
         int input_w = p_netinfo[1];
         int input_h = p_netinfo[2];
         int max_output_object_count = p_netinfo[3];
+
         YoloLayerPlugin* obj = new YoloLayerPlugin(class_count, input_w, input_h, max_output_object_count);
         obj->setPluginNamespace(mNamespace.c_str());
         return obj;
