@@ -2,7 +2,6 @@
 
 Logger ggLogger;
 
-
 void readEngineFile(const std::string& engine_file, nvinfer1::IRuntime*& runtime, nvinfer1::ICudaEngine*& engine, nvinfer1::IExecutionContext*& context){
     std::fstream file;
 
