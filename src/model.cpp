@@ -113,27 +113,27 @@ nvinfer1::IBuilderConfig* config, nvinfer1::DataType dt, const std::string& wts_
     *******************************************************************************************************/
     
     nvinfer1::IShuffleLayer* shuffle22_0 = network->addShuffle(*cat22_0->getOutput(0));
-    shuffle22_0->setReshapeDimensions(nvinfer1::Dims2{144, 6400});
+    shuffle22_0->setReshapeDimensions(nvinfer1::Dims2{144, (kInputH / 8) * (kInputW / 8) });
     
-    nvinfer1::ISliceLayer* split22_0_0 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{0, 0}, nvinfer1::Dims2{64, 6400}, nvinfer1::Dims2{1,1});
-    nvinfer1::ISliceLayer* split22_0_1 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{64, 0}, nvinfer1::Dims2{80, 6400}, nvinfer1::Dims2{1,1});
-    nvinfer1::IShuffleLayer* dfl22_0 = DFL(network, weightMap, *split22_0_0->getOutput(0), 4, 6400, 1, 1, 0, "model.22.dfl.conv.weight");
+    nvinfer1::ISliceLayer* split22_0_0 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{0, 0}, nvinfer1::Dims2{64, (kInputH / 8) * (kInputW / 8) }, nvinfer1::Dims2{1,1});
+    nvinfer1::ISliceLayer* split22_0_1 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{64, 0}, nvinfer1::Dims2{80, (kInputH / 8) * (kInputW / 8) }, nvinfer1::Dims2{1,1});
+    nvinfer1::IShuffleLayer* dfl22_0 = DFL(network, weightMap, *split22_0_0->getOutput(0), 4, (kInputH / 8) * (kInputW / 8), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_0[] = {dfl22_0->getOutput(0), split22_0_1->getOutput(0)};
     nvinfer1::IConcatenationLayer* cat22_dfl_0 = network->addConcatenation(inputTensor22_dfl_0, 2);
 
     nvinfer1::IShuffleLayer* shuffle22_1 = network->addShuffle(*cat22_1->getOutput(0));
-    shuffle22_1->setReshapeDimensions(nvinfer1::Dims2{144, 1600});
-    nvinfer1::ISliceLayer* split22_1_0 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{0, 0}, nvinfer1::Dims2{64, 1600}, nvinfer1::Dims2{1,1});
-    nvinfer1::ISliceLayer* split22_1_1 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{64, 0}, nvinfer1::Dims2{ 80, 1600}, nvinfer1::Dims2{1,1});
-    nvinfer1::IShuffleLayer* dfl22_1 = DFL(network, weightMap, *split22_1_0->getOutput(0), 4, 1600, 1, 1, 0, "model.22.dfl.conv.weight");
+    shuffle22_1->setReshapeDimensions(nvinfer1::Dims2{144, (kInputH / 16) * (kInputW / 16) });
+    nvinfer1::ISliceLayer* split22_1_0 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{0, 0}, nvinfer1::Dims2{64, (kInputH / 16) * (kInputW / 16) }, nvinfer1::Dims2{1,1});
+    nvinfer1::ISliceLayer* split22_1_1 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{64, 0}, nvinfer1::Dims2{ 80, (kInputH / 16) * (kInputW / 16) }, nvinfer1::Dims2{1,1});
+    nvinfer1::IShuffleLayer* dfl22_1 = DFL(network, weightMap, *split22_1_0->getOutput(0), 4, (kInputH / 16) * (kInputW / 16), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_1[] = {dfl22_1->getOutput(0), split22_1_1->getOutput(0)};
     nvinfer1::IConcatenationLayer* cat22_dfl_1 = network->addConcatenation(inputTensor22_dfl_1, 2);
 
     nvinfer1::IShuffleLayer* shuffle22_2 = network->addShuffle(*cat22_2->getOutput(0));
-    shuffle22_2->setReshapeDimensions(nvinfer1::Dims2{144, 400});
-    nvinfer1::ISliceLayer* split22_2_0 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{0, 0}, nvinfer1::Dims2{64, 400 }, nvinfer1::Dims2{1,1});
-    nvinfer1::ISliceLayer* split22_2_1 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{64, 0}, nvinfer1::Dims2{ 80, 400 }, nvinfer1::Dims2{1,1});
-    nvinfer1::IShuffleLayer* dfl22_2 = DFL(network, weightMap, *split22_2_0->getOutput(0), 4, 400, 1, 1, 0, "model.22.dfl.conv.weight");
+    shuffle22_2->setReshapeDimensions(nvinfer1::Dims2{144, (kInputH / 32) * (kInputW / 32) });
+    nvinfer1::ISliceLayer* split22_2_0 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{0, 0}, nvinfer1::Dims2{64, (kInputH / 32) * (kInputW / 32) }, nvinfer1::Dims2{1,1});
+    nvinfer1::ISliceLayer* split22_2_1 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{64, 0}, nvinfer1::Dims2{ 80, (kInputH / 32) * (kInputW / 32) }, nvinfer1::Dims2{1,1});
+    nvinfer1::IShuffleLayer* dfl22_2 = DFL(network, weightMap, *split22_2_0->getOutput(0), 4, (kInputH / 32) * (kInputW / 32), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_2[] = {dfl22_2->getOutput(0), split22_2_1->getOutput(0)};
     nvinfer1::IConcatenationLayer* cat22_dfl_2 = network->addConcatenation(inputTensor22_dfl_2, 2);
 
@@ -275,27 +275,27 @@ nvinfer1::IBuilderConfig* config, nvinfer1::DataType dt, const std::string& wts_
     *********************************************  YOLOV8 DETECT  ******************************************
     *******************************************************************************************************/
     nvinfer1::IShuffleLayer* shuffle22_0 = network->addShuffle(*cat22_0->getOutput(0));
-    shuffle22_0->setReshapeDimensions(nvinfer1::Dims2{ 144, 6400 });
+    shuffle22_0->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 8) * (kInputW / 8) });
 
-    nvinfer1::ISliceLayer* split22_0_0 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 6400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_0_1 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 6400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_0 = DFL(network, weightMap, *split22_0_0->getOutput(0), 4, 6400, 1, 1, 0, "model.22.dfl.conv.weight");
+    nvinfer1::ISliceLayer* split22_0_0 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 8) * (kInputW / 8) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_0_1 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 8) * (kInputW / 8) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_0 = DFL(network, weightMap, *split22_0_0->getOutput(0), 4, (kInputH / 8) * (kInputW / 8), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_0[] = { dfl22_0->getOutput(0), split22_0_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_0 = network->addConcatenation(inputTensor22_dfl_0, 2);
 
     nvinfer1::IShuffleLayer* shuffle22_1 = network->addShuffle(*cat22_1->getOutput(0));
-    shuffle22_1->setReshapeDimensions(nvinfer1::Dims2{ 144, 1600 });
-    nvinfer1::ISliceLayer* split22_1_0 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 1600 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_1_1 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 1600 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_1 = DFL(network, weightMap, *split22_1_0->getOutput(0), 4, 1600, 1, 1, 0, "model.22.dfl.conv.weight");
+    shuffle22_1->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 16) * (kInputW / 16) });
+    nvinfer1::ISliceLayer* split22_1_0 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 16) * (kInputW / 16) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_1_1 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 16) * (kInputW / 16) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_1 = DFL(network, weightMap, *split22_1_0->getOutput(0), 4, (kInputH / 16) * (kInputW / 16), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_1[] = { dfl22_1->getOutput(0), split22_1_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_1 = network->addConcatenation(inputTensor22_dfl_1, 2);
 
     nvinfer1::IShuffleLayer* shuffle22_2 = network->addShuffle(*cat22_2->getOutput(0));
-    shuffle22_2->setReshapeDimensions(nvinfer1::Dims2{ 144, 400 });
-    nvinfer1::ISliceLayer* split22_2_0 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_2_1 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_2 = DFL(network, weightMap, *split22_2_0->getOutput(0), 4, 400, 1, 1, 0, "model.22.dfl.conv.weight");
+    shuffle22_2->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 32) * (kInputW / 32) });
+    nvinfer1::ISliceLayer* split22_2_0 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 32) * (kInputW / 32) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_2_1 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 32) * (kInputW / 32) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_2 = DFL(network, weightMap, *split22_2_0->getOutput(0), 4, (kInputH / 32) * (kInputW / 32), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_2[] = { dfl22_2->getOutput(0), split22_2_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_2 = network->addConcatenation(inputTensor22_dfl_2, 2);
 
@@ -430,27 +430,27 @@ nvinfer1::IBuilderConfig* config, nvinfer1::DataType dt, const std::string& wts_
     *********************************************  YOLOV8 DETECT  ******************************************
     *******************************************************************************************************/
     nvinfer1::IShuffleLayer* shuffle22_0 = network->addShuffle(*cat22_0->getOutput(0));
-    shuffle22_0->setReshapeDimensions(nvinfer1::Dims2{ 144, 6400 });
+    shuffle22_0->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 8) * (kInputW / 8) });
 
-    nvinfer1::ISliceLayer* split22_0_0 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 6400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_0_1 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 6400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_0 = DFL(network, weightMap, *split22_0_0->getOutput(0), 4, 6400, 1, 1, 0, "model.22.dfl.conv.weight");
+    nvinfer1::ISliceLayer* split22_0_0 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 8) * (kInputW / 8) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_0_1 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 8) * (kInputW / 8) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_0 = DFL(network, weightMap, *split22_0_0->getOutput(0), 4, (kInputH / 8) * (kInputW / 8), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_0[] = { dfl22_0->getOutput(0), split22_0_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_0 = network->addConcatenation(inputTensor22_dfl_0, 2);
 
     nvinfer1::IShuffleLayer* shuffle22_1 = network->addShuffle(*cat22_1->getOutput(0));
-    shuffle22_1->setReshapeDimensions(nvinfer1::Dims2{ 144, 1600 });
-    nvinfer1::ISliceLayer* split22_1_0 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 1600 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_1_1 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 1600 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_1 = DFL(network, weightMap, *split22_1_0->getOutput(0), 4, 1600, 1, 1, 0, "model.22.dfl.conv.weight");
+    shuffle22_1->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 16) * (kInputW / 16) });
+    nvinfer1::ISliceLayer* split22_1_0 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 16) * (kInputW / 16) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_1_1 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 16) * (kInputW / 16) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_1 = DFL(network, weightMap, *split22_1_0->getOutput(0), 4, (kInputH / 16) * (kInputW / 16), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_1[] = { dfl22_1->getOutput(0), split22_1_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_1 = network->addConcatenation(inputTensor22_dfl_1, 2);
 
     nvinfer1::IShuffleLayer* shuffle22_2 = network->addShuffle(*cat22_2->getOutput(0));
-    shuffle22_2->setReshapeDimensions(nvinfer1::Dims2{ 144, 400 });
-    nvinfer1::ISliceLayer* split22_2_0 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_2_1 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_2 = DFL(network, weightMap, *split22_2_0->getOutput(0), 4, 400, 1, 1, 0, "model.22.dfl.conv.weight");
+    shuffle22_2->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 32) * (kInputW / 32) });
+    nvinfer1::ISliceLayer* split22_2_0 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 32) * (kInputW / 32) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_2_1 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 32) * (kInputW / 32) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_2 = DFL(network, weightMap, *split22_2_0->getOutput(0), 4, (kInputH / 32) * (kInputW / 32), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_2[] = { dfl22_2->getOutput(0), split22_2_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_2 = network->addConcatenation(inputTensor22_dfl_2, 2);
 
@@ -586,27 +586,27 @@ nvinfer1::IHostMemory* buildEngineYolov8l(const int& kBatchSize, nvinfer1::IBuil
     *********************************************  YOLOV8 DETECT  ******************************************
     *******************************************************************************************************/
     nvinfer1::IShuffleLayer* shuffle22_0 = network->addShuffle(*cat22_0->getOutput(0));
-    shuffle22_0->setReshapeDimensions(nvinfer1::Dims2{ 144, 6400 });
+    shuffle22_0->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 8) * (kInputW / 8) });
 
-    nvinfer1::ISliceLayer* split22_0_0 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 6400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_0_1 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 6400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_0 = DFL(network, weightMap, *split22_0_0->getOutput(0), 4, 6400, 1, 1, 0, "model.22.dfl.conv.weight");
+    nvinfer1::ISliceLayer* split22_0_0 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 8) * (kInputW / 8) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_0_1 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 8) * (kInputW / 8) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_0 = DFL(network, weightMap, *split22_0_0->getOutput(0), 4, (kInputH / 8) * (kInputW / 8), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_0[] = { dfl22_0->getOutput(0), split22_0_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_0 = network->addConcatenation(inputTensor22_dfl_0, 2);
 
     nvinfer1::IShuffleLayer* shuffle22_1 = network->addShuffle(*cat22_1->getOutput(0));
-    shuffle22_1->setReshapeDimensions(nvinfer1::Dims2{ 144, 1600 });
-    nvinfer1::ISliceLayer* split22_1_0 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 1600 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_1_1 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 1600 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_1 = DFL(network, weightMap, *split22_1_0->getOutput(0), 4, 1600, 1, 1, 0, "model.22.dfl.conv.weight");
+    shuffle22_1->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 16) * (kInputW / 16) });
+    nvinfer1::ISliceLayer* split22_1_0 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 16) * (kInputW / 16) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_1_1 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 16) * (kInputW / 16) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_1 = DFL(network, weightMap, *split22_1_0->getOutput(0), 4, (kInputH / 16) * (kInputW / 16), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_1[] = { dfl22_1->getOutput(0), split22_1_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_1 = network->addConcatenation(inputTensor22_dfl_1, 2);
 
     nvinfer1::IShuffleLayer* shuffle22_2 = network->addShuffle(*cat22_2->getOutput(0));
-    shuffle22_2->setReshapeDimensions(nvinfer1::Dims2{ 144, 400 });
-    nvinfer1::ISliceLayer* split22_2_0 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_2_1 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_2 = DFL(network, weightMap, *split22_2_0->getOutput(0), 4, 400, 1, 1, 0, "model.22.dfl.conv.weight");
+    shuffle22_2->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 32) * (kInputW / 32) });
+    nvinfer1::ISliceLayer* split22_2_0 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 32) * (kInputW / 32) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_2_1 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 32) * (kInputW / 32) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_2 = DFL(network, weightMap, *split22_2_0->getOutput(0), 4, (kInputH / 32) * (kInputW / 32), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_2[] = { dfl22_2->getOutput(0), split22_2_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_2 = network->addConcatenation(inputTensor22_dfl_2, 2);
 
@@ -638,6 +638,7 @@ nvinfer1::IHostMemory* buildEngineYolov8l(const int& kBatchSize, nvinfer1::IBuil
     }
     return serialized_model;
 }
+
 
 nvinfer1::IHostMemory* buildEngineYolov8x(const int& kBatchSize, nvinfer1::IBuilder* builder,
 nvinfer1::IBuilderConfig* config, nvinfer1::DataType dt, const std::string& wts_path) {
@@ -741,27 +742,27 @@ nvinfer1::IBuilderConfig* config, nvinfer1::DataType dt, const std::string& wts_
     *********************************************  YOLOV8 DETECT  ******************************************
     *******************************************************************************************************/
     nvinfer1::IShuffleLayer* shuffle22_0 = network->addShuffle(*cat22_0->getOutput(0));
-    shuffle22_0->setReshapeDimensions(nvinfer1::Dims2{ 144, 6400 });
+    shuffle22_0->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 8) * (kInputW / 8) });
 
-    nvinfer1::ISliceLayer* split22_0_0 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 6400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_0_1 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 6400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_0 = DFL(network, weightMap, *split22_0_0->getOutput(0), 4, 6400, 1, 1, 0, "model.22.dfl.conv.weight");
+    nvinfer1::ISliceLayer* split22_0_0 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 8) * (kInputW / 8) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_0_1 = network->addSlice(*shuffle22_0->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 8) * (kInputW / 8) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_0 = DFL(network, weightMap, *split22_0_0->getOutput(0), 4, (kInputH / 8) * (kInputW / 8), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_0[] = { dfl22_0->getOutput(0), split22_0_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_0 = network->addConcatenation(inputTensor22_dfl_0, 2);
 
     nvinfer1::IShuffleLayer* shuffle22_1 = network->addShuffle(*cat22_1->getOutput(0));
-    shuffle22_1->setReshapeDimensions(nvinfer1::Dims2{ 144, 1600 });
-    nvinfer1::ISliceLayer* split22_1_0 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 1600 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_1_1 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 1600 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_1 = DFL(network, weightMap, *split22_1_0->getOutput(0), 4, 1600, 1, 1, 0, "model.22.dfl.conv.weight");
+    shuffle22_1->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 16) * (kInputW / 16) });
+    nvinfer1::ISliceLayer* split22_1_0 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 16) * (kInputW / 16) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_1_1 = network->addSlice(*shuffle22_1->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 16) * (kInputW / 16) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_1 = DFL(network, weightMap, *split22_1_0->getOutput(0), 4, (kInputH / 16) * (kInputW / 16), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_1[] = { dfl22_1->getOutput(0), split22_1_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_1 = network->addConcatenation(inputTensor22_dfl_1, 2);
 
     nvinfer1::IShuffleLayer* shuffle22_2 = network->addShuffle(*cat22_2->getOutput(0));
-    shuffle22_2->setReshapeDimensions(nvinfer1::Dims2{ 144, 400 });
-    nvinfer1::ISliceLayer* split22_2_0 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, 400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::ISliceLayer* split22_2_1 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, 400 }, nvinfer1::Dims2{ 1,1 });
-    nvinfer1::IShuffleLayer* dfl22_2 = DFL(network, weightMap, *split22_2_0->getOutput(0), 4, 400, 1, 1, 0, "model.22.dfl.conv.weight");
+    shuffle22_2->setReshapeDimensions(nvinfer1::Dims2{ 144, (kInputH / 32) * (kInputW / 32) });
+    nvinfer1::ISliceLayer* split22_2_0 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 0, 0 }, nvinfer1::Dims2{ 64, (kInputH / 32) * (kInputW / 32) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::ISliceLayer* split22_2_1 = network->addSlice(*shuffle22_2->getOutput(0), nvinfer1::Dims2{ 64, 0 }, nvinfer1::Dims2{ 80, (kInputH / 32) * (kInputW / 32) }, nvinfer1::Dims2{ 1,1 });
+    nvinfer1::IShuffleLayer* dfl22_2 = DFL(network, weightMap, *split22_2_0->getOutput(0), 4, (kInputH / 32) * (kInputW / 32), 1, 1, 0, "model.22.dfl.conv.weight");
     nvinfer1::ITensor* inputTensor22_dfl_2[] = { dfl22_2->getOutput(0), split22_2_1->getOutput(0) };
     nvinfer1::IConcatenationLayer* cat22_dfl_2 = network->addConcatenation(inputTensor22_dfl_2, 2);
 
