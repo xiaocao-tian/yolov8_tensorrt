@@ -7,7 +7,7 @@ namespace nvinfer1
 {
     class __declspec(dllexport) YoloLayerPlugin : public nvinfer1::IPluginV2IOExt {
     public:
-        YoloLayerPlugin(int classCount, int netHeight, int netWdith, int maxOut);
+        YoloLayerPlugin(int classCount, int netWdith, int netHeight, int maxOut);
         YoloLayerPlugin(const void* data, size_t length);
         ~YoloLayerPlugin();
 
@@ -59,7 +59,7 @@ namespace nvinfer1
         void detachFromContext() noexcept override;
 
     private:
-        void forwardGpu(const float* const* inputs, float* output, cudaStream_t stream, int batchSize);
+        void forwardGpu(const float* const* inputs, float* output, cudaStream_t stream, int mYoloV8netHeight, int mYoloV8NetWidth, int batchSize);
         int mThreadCount = 256;
         const char* mPluginNamespace;
         int mClassCount;
