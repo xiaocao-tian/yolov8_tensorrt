@@ -14,7 +14,7 @@ __global__ void warpaffine_kernel(
 	float m_y2 = d2s.value[4];
 
 	int dx = position % dst_width;
-	int dy = position / dst_height;
+	int dy = position / dst_width;
 	float src_x = m_x1 * dx + m_y1 * dy;
 	float src_y = m_x2 * dx + m_y2 * dy;
 	float c0, c1, c2;
