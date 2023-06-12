@@ -104,7 +104,7 @@ void Inference(std::string& engine_name, std::string& class_file) {
 
 int main() {
     std::string wts_name = "../weights/yolov8s.wts";
-    // wts_name = "";
+    wts_name = "";
     std::string engine_name = "../weights/yolov8s.engine";
     std::string class_file = "../weights/classes80.txt";
     std::string sub_type = "s";
