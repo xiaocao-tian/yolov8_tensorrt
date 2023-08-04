@@ -106,7 +106,7 @@ int main() {
     std::string wts_name = "../weights/yolov8s.wts";
     wts_name = "";
     std::string engine_name = "../weights/yolov8s.engine";
-    std::string class_file = "../weights/classes80.txt";
+    std::string class_file = "../weights/classes.txt";
     std::string sub_type = "s";
 
     if (!wts_name.empty()) {
