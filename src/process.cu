@@ -137,20 +137,33 @@ void NMS(std::vector<Detection>& res, float* output, const float& conf_thresh, c
 	}
 }
 
-cv::Rect getRect(cv::Mat& img, float bbox[4], float& scale) {
-	float l, r, t, b;
-	l = bbox[0] / scale;
-	t = bbox[1] / scale;
-	r = bbox[2] / scale;
-	b = bbox[3] / scale;
-	return cv::Rect(int(l), int(t), int(r - l), int(b - t));
-}
+//cv::Rect getRect(cv::Mat& img, float bbox[4], float& scale) {
+//	float l, r, t, b;
+//	l = bbox[0] / scale;
+//	t = bbox[1] / scale;
+//	r = bbox[2] / scale;
+//	b = bbox[3] / scale;
+//	return cv::Rect(int(l), int(t), int(r - l), int(b - t));
+//}
+//
+//void drawBbox(cv::Mat& img, std::vector<Detection>& res, float& scale, std::map<int, std::string>& Labels) {
+//	for (size_t j = 0; j < res.size(); j++) {
+//		cv::Rect r = getRect(img, res[j].bbox, scale);
+//		std::string name = Labels[(int)res[j].class_id];
+//		cv::rectangle(img, r, cv::Scalar(0xFF, 0xFF, 0), 2);
+//		cv::putText(img, name, cv::Point(r.x, r.y - 1), cv::FONT_HERSHEY_PLAIN, 1.2, cv::Scalar(0xFF, 0xFF, 0), 2);
+//	}
+//}
 
 void drawBbox(cv::Mat& img, std::vector<Detection>& res, float& scale, std::map<int, std::string>& Labels) {
 	for (size_t j = 0; j < res.size(); j++) {
-		cv::Rect r = getRect(img, res[j].bbox, scale);
+		float l = res[j].bbox[0] / scale;
+		float t = res[j].bbox[1] / scale;
+		float r = res[j].bbox[2] / scale;
+		float b = res[j].bbox[3] / scale;
+		cv::Rect rect = cv::Rect(int(l), int(t), int(r - l), int(b - t));
 		std::string name = Labels[(int)res[j].class_id];
-		cv::rectangle(img, r, cv::Scalar(0xFF, 0xFF, 0), 2);
-		cv::putText(img, name, cv::Point(r.x, r.y - 1), cv::FONT_HERSHEY_PLAIN, 1.2, cv::Scalar(0xFF, 0xFF, 0), 2);
+		cv::rectangle(img, rect, cv::Scalar(0xFF, 0xFF, 0), 2);
+		cv::putText(img, name, cv::Point(rect.x, rect.y - 1), cv::FONT_HERSHEY_PLAIN, 1.2, cv::Scalar(0xFF, 0xFF, 0), 2);
 	}
 }
