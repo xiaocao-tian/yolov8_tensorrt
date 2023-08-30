@@ -1,14 +1,13 @@
 
-# Reference 
-Reference wang-xinyu [tensorrtx](https://github.com/wang-xinyu/tensorrtx)
-
 # YOLOv8
 The Pytorch implementation is [ultralytics/ultralytics](https://github.com/ultralytics/ultralytics)
 
+# Reference 
+Reference wang-xinyu [tensorrtx](https://github.com/wang-xinyu/tensorrtx)
 
 # Requirements
 TensorRT 8.2\
-OpenCV 3.6.0
+OpenCV 4.6.0
 
 # Config
 Choose the model n/s/m/l/x from command line arguments.\
