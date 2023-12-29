@@ -31,3 +31,5 @@ python gen_wts.py
 2. serialize the model and test
 
 ![bus](https://github.com/tianqiang1223/yolov8_tensorrt/blob/main/images/bus.jpg)
+
+# 转载请注明出处
